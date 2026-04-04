@@ -2,42 +2,42 @@
 const PRODUCTS = [
   {
     id: 1, name: "Premium Wireless Headphones", category: "Electronics",
-    price: 89.99, emoji: "🎧",
+    price: 89.99, emoji: "🎧", badge: "Best Seller", rating: "4.9 ★",
     desc: "Immersive sound with active noise cancellation and 30-hour battery life."
   },
   {
     id: 2, name: "Minimalist Watch", category: "Accessories",
-    price: 149.00, emoji: "⌚",
+    price: 149.00, emoji: "⌚", badge: "New", rating: "4.8 ★",
     desc: "Elegant design with sapphire glass and Swiss movement. Water resistant."
   },
   {
     id: 3, name: "Running Sneakers", category: "Footwear",
-    price: 74.50, emoji: "👟",
+    price: 74.50, emoji: "👟", badge: null, rating: "4.7 ★",
     desc: "Lightweight foam cushioning for maximum comfort on every run."
   },
   {
     id: 4, name: "Leather Backpack", category: "Bags",
-    price: 119.00, emoji: "🎒",
+    price: 119.00, emoji: "🎒", badge: "Popular", rating: "4.9 ★",
     desc: "Full-grain leather with padded laptop compartment. Fits 15\" laptops."
   },
   {
     id: 5, name: "Scented Candle Set", category: "Home",
-    price: 34.99, emoji: "🕯️",
+    price: 34.99, emoji: "🕯️", badge: null, rating: "4.6 ★",
     desc: "Hand-poured soy wax candles in 4 seasonal fragrances. 40-hour burn."
   },
   {
     id: 6, name: "Polarized Sunglasses", category: "Accessories",
-    price: 59.00, emoji: "🕶️",
+    price: 59.00, emoji: "🕶️", badge: "Sale", rating: "4.8 ★",
     desc: "UV400 protection with lightweight titanium frames in 6 color options."
   },
   {
     id: 7, name: "Stainless Water Bottle", category: "Sports",
-    price: 29.99, emoji: "🧴",
+    price: 29.99, emoji: "🧴", badge: null, rating: "4.7 ★",
     desc: "Triple-wall insulation keeps drinks cold 24h and hot 12h. BPA-free."
   },
   {
     id: 8, name: "Mechanical Keyboard", category: "Electronics",
-    price: 129.00, emoji: "⌨️",
+    price: 129.00, emoji: "⌨️", badge: "New", rating: "4.9 ★",
     desc: "Tactile cherry MX switches with per-key RGB lighting. Tenkeyless layout."
   },
 ];
@@ -54,13 +54,20 @@ const state = {
 const $ = id => document.getElementById(id);
 
 // ===== RENDER PRODUCTS =====
-function renderProducts() {
+let activeCategory = 'All';
+
+function renderProducts(cat = activeCategory) {
   const grid = $('productsGrid');
-  grid.innerHTML = PRODUCTS.map(p => `
+  const filtered = cat === 'All' ? PRODUCTS : PRODUCTS.filter(p => p.category === cat);
+  grid.innerHTML = filtered.map(p => `
     <div class="product-card" data-id="${p.id}">
+      ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
       <div class="product-img">${p.emoji}</div>
       <div class="product-body">
-        <div class="product-category">${p.category}</div>
+        <div class="product-top">
+          <div class="product-category">${p.category}</div>
+          <div class="product-rating">${p.rating}</div>
+        </div>
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-footer">
@@ -71,12 +78,25 @@ function renderProducts() {
     </div>
   `).join('');
 
-  grid.addEventListener('click', e => {
-    const btn = e.target.closest('.add-to-cart');
-    if (!btn) return;
-    addToCart(+btn.dataset.id);
-  });
+  if (!grid._hasListener) {
+    grid.addEventListener('click', e => {
+      const btn = e.target.closest('.add-to-cart');
+      if (!btn) return;
+      addToCart(+btn.dataset.id);
+    });
+    grid._hasListener = true;
+  }
 }
+
+// ===== CATEGORY FILTERS =====
+document.getElementById('categoryFilters').addEventListener('click', e => {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = btn.dataset.cat;
+  renderProducts(activeCategory);
+});
 
 // ===== CART =====
 function addToCart(id) {
@@ -115,6 +135,8 @@ function getCartCount() {
 function updateCartUI() {
   const count = getCartCount();
   $('cartCount').textContent = count;
+  const headerCount = $('cartHeaderCount');
+  if (headerCount) headerCount.textContent = count > 0 ? `${count} item${count > 1 ? 's' : ''}` : '';
 
   const itemsEl = $('cartItems');
   const emptyEl = $('cartEmpty');
@@ -363,6 +385,29 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
+
+// ===== PROMO BAR =====
+$('promoClose').addEventListener('click', () => {
+  const bar = document.querySelector('.promo-bar');
+  bar.style.transition = 'max-height .3s, opacity .3s, padding .3s';
+  bar.style.maxHeight = '0';
+  bar.style.opacity = '0';
+  bar.style.padding = '0';
+  setTimeout(() => bar.remove(), 300);
+});
+
+// ===== HEADER SCROLL =====
+window.addEventListener('scroll', () => {
+  $('header').classList.toggle('scrolled', window.scrollY > 10);
+}, { passive: true });
+
+// ===== NEWSLETTER =====
+$('newsletterForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const input = e.target.querySelector('input');
+  showToast(`✓ Subscribed with ${input.value}`);
+  input.value = '';
+});
 
 // ===== INIT =====
 renderProducts();

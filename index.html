@@ -3,22 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopEase — Modern E-Commerce</title>
+  <title>ShopEase — Premium E-Commerce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
+  <!-- ===== PROMO BANNER ===== -->
+  <div class="promo-bar">
+    <span>&#127807; Free shipping on orders over $50 &nbsp;&bull;&nbsp; Use code <strong>SAVE10</strong> for 10% off your first order</span>
+    <button class="promo-close" id="promoClose">&times;</button>
+  </div>
+
   <!-- ===== NAVIGATION ===== -->
-  <header class="header">
+  <header class="header" id="header">
     <div class="container nav-container">
-      <a href="#" class="logo">ShopEase</a>
+      <a href="#" class="logo">
+        <span class="logo-icon">&#127807;</span>
+        ShopEase
+      </a>
       <nav class="nav-links">
         <a href="#products">Products</a>
         <a href="#about">About</a>
+        <a href="#newsletter">Newsletter</a>
       </nav>
       <div class="nav-actions">
-        <button class="btn btn-ghost" id="loginBtn">Login</button>
-        <button class="cart-btn" id="cartBtn">
+        <button class="btn btn-ghost btn-sm" id="loginBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+          Login
+        </button>
+        <button class="cart-btn" id="cartBtn" aria-label="Open cart">
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9m-9-4h4"/></svg>
           <span class="cart-count" id="cartCount">0</span>
         </button>
@@ -28,50 +44,181 @@
 
   <!-- ===== HERO ===== -->
   <section class="hero">
+    <div class="hero-bg-pattern"></div>
     <div class="container hero-content">
-      <h1>Discover <span class="accent">Premium</span> Products</h1>
-      <p>Quality items curated just for you. Shop with confidence and style.</p>
-      <a href="#products" class="btn btn-primary">Shop Now</a>
+      <div class="hero-badge">&#10024; New Collection 2026</div>
+      <h1>Shop Smarter.<br><span class="accent">Live Better.</span></h1>
+      <p>Discover premium products handpicked for quality, style, and value. Trusted by over 10,000 happy customers.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn btn-primary btn-lg">Explore Collection</a>
+        <a href="#about" class="btn btn-outline btn-lg">Learn More</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-icon">&#9733;</span> 4.9 Rating</div>
+        <div class="trust-divider"></div>
+        <div class="trust-item"><span class="trust-icon">&#128274;</span> Secure Checkout</div>
+        <div class="trust-divider"></div>
+        <div class="trust-item"><span class="trust-icon">&#128230;</span> Free Returns</div>
+      </div>
     </div>
-    <div class="hero-shapes">
-      <div class="shape s1"></div>
-      <div class="shape s2"></div>
-      <div class="shape s3"></div>
+    <div class="hero-visual">
+      <div class="hero-card hc1"><span>&#127909;</span><p>New Arrivals</p></div>
+      <div class="hero-card hc2"><span>&#128091;</span><p>Best Sellers</p></div>
+      <div class="hero-card hc3"><span>&#127873;</span><p>Special Offers</p></div>
     </div>
   </section>
+
+  <!-- ===== TRUST BAR ===== -->
+  <div class="trust-bar">
+    <div class="container trust-bar-inner">
+      <div class="trust-feat"><span>&#128666;</span><div><strong>Free Delivery</strong><small>On orders $50+</small></div></div>
+      <div class="trust-feat"><span>&#128260;</span><div><strong>Easy Returns</strong><small>30-day policy</small></div></div>
+      <div class="trust-feat"><span>&#128274;</span><div><strong>Secure Payment</strong><small>256-bit SSL</small></div></div>
+      <div class="trust-feat"><span>&#128241;</span><div><strong>24/7 Support</strong><small>Always here to help</small></div></div>
+    </div>
+  </div>
 
   <!-- ===== PRODUCTS ===== -->
   <section class="products-section" id="products">
     <div class="container">
-      <h2 class="section-title">Featured Products</h2>
+      <div class="section-header">
+        <div>
+          <p class="section-label">Curated for you</p>
+          <h2 class="section-title">Featured Products</h2>
+        </div>
+        <div class="category-filters" id="categoryFilters">
+          <button class="filter-btn active" data-cat="All">All</button>
+          <button class="filter-btn" data-cat="Electronics">Electronics</button>
+          <button class="filter-btn" data-cat="Accessories">Accessories</button>
+          <button class="filter-btn" data-cat="Footwear">Footwear</button>
+          <button class="filter-btn" data-cat="Bags">Bags</button>
+          <button class="filter-btn" data-cat="Home">Home</button>
+          <button class="filter-btn" data-cat="Sports">Sports</button>
+        </div>
+      </div>
       <div class="products-grid" id="productsGrid"></div>
+    </div>
+  </section>
+
+  <!-- ===== NEWSLETTER ===== -->
+  <section class="newsletter-section" id="newsletter">
+    <div class="container newsletter-inner">
+      <div class="newsletter-text">
+        <p class="section-label">Stay in the loop</p>
+        <h2>Get Exclusive Deals</h2>
+        <p>Join 10,000+ shoppers and be the first to know about new arrivals, sales, and special offers.</p>
+      </div>
+      <form class="newsletter-form" id="newsletterForm">
+        <input type="email" placeholder="Enter your email address" required />
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+      </form>
     </div>
   </section>
 
   <!-- ===== ABOUT ===== -->
   <section class="about-section" id="about">
-    <div class="container about-grid">
-      <div class="about-text">
-        <h2>Why Choose ShopEase?</h2>
-        <ul class="features-list">
-          <li><span class="icon">&#10003;</span> Free shipping on orders over $50</li>
-          <li><span class="icon">&#10003;</span> 30-day hassle-free returns</li>
-          <li><span class="icon">&#10003;</span> Secure, encrypted payments</li>
-          <li><span class="icon">&#10003;</span> 24/7 customer support</li>
-        </ul>
+    <div class="container">
+      <div class="about-top">
+        <p class="section-label light">Our commitment</p>
+        <h2>Why 10,000+ Customers Choose ShopEase</h2>
       </div>
-      <div class="about-stats">
-        <div class="stat"><span class="stat-num">10K+</span><span>Happy Customers</span></div>
-        <div class="stat"><span class="stat-num">500+</span><span>Products</span></div>
-        <div class="stat"><span class="stat-num">99%</span><span>Satisfaction</span></div>
+      <div class="about-grid">
+        <div class="about-features">
+          <div class="feature-card">
+            <div class="feature-icon">&#128666;</div>
+            <div>
+              <h4>Free Shipping</h4>
+              <p>Free delivery on all orders over $50. Express options available at checkout.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">&#128260;</div>
+            <div>
+              <h4>30-Day Returns</h4>
+              <p>Not happy? Send it back. No questions asked, full refund guaranteed.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">&#128274;</div>
+            <div>
+              <h4>Secure Payments</h4>
+              <p>Your data is encrypted and protected. We never store card details.</p>
+            </div>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon">&#128241;</div>
+            <div>
+              <h4>24/7 Support</h4>
+              <p>Our team is always here. Reach us via chat, email, or phone anytime.</p>
+            </div>
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="stat">
+            <span class="stat-num">10K+</span>
+            <span class="stat-label">Happy Customers</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">500+</span>
+            <span class="stat-label">Premium Products</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">99%</span>
+            <span class="stat-label">Satisfaction Rate</span>
+          </div>
+          <div class="stat">
+            <span class="stat-num">4.9&#9733;</span>
+            <span class="stat-label">Average Rating</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer">
-    <div class="container">
-      <p>&copy; 2026 ShopEase. All rights reserved.</p>
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo logo-light"><span class="logo-icon">&#127807;</span> ShopEase</a>
+        <p>Your trusted destination for premium products. Shop with confidence, every time.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Twitter">&#120143;</a>
+          <a href="#" aria-label="Instagram">&#128247;</a>
+          <a href="#" aria-label="Facebook">&#128100;</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Shop</h5>
+        <a href="#products">All Products</a>
+        <a href="#products">New Arrivals</a>
+        <a href="#products">Best Sellers</a>
+        <a href="#products">Special Offers</a>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <a href="#">Help Center</a>
+        <a href="#">Track Order</a>
+        <a href="#">Returns</a>
+        <a href="#">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#about">About Us</a>
+        <a href="#">Careers</a>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 ShopEase. All rights reserved.</p>
+        <div class="payment-badges">
+          <span class="pay-badge">VISA</span>
+          <span class="pay-badge">MC</span>
+          <span class="pay-badge">AMEX</span>
+          <span class="pay-badge">PayPal</span>
+        </div>
+      </div>
     </div>
   </footer>
 
@@ -79,6 +226,10 @@
   <div class="modal-overlay" id="loginModal">
     <div class="modal">
       <button class="modal-close" id="closeLogin">&times;</button>
+      <div class="modal-brand">
+        <span class="logo-icon">&#127807;</span>
+        <span>ShopEase</span>
+      </div>
       <div class="modal-tabs">
         <button class="tab-btn active" data-tab="signin">Sign In</button>
         <button class="tab-btn" data-tab="signup">Sign Up</button>
@@ -87,9 +238,9 @@
       <!-- Sign In -->
       <form class="tab-content active" id="signinForm" data-tab="signin">
         <h2>Welcome Back</h2>
-        <p class="form-sub">Sign in to your account</p>
+        <p class="form-sub">Sign in to continue shopping</p>
         <div class="form-group">
-          <label>Email</label>
+          <label>Email Address</label>
           <input type="email" id="signinEmail" placeholder="you@example.com" required />
         </div>
         <div class="form-group">
@@ -98,24 +249,24 @@
         </div>
         <div class="form-error" id="signinError"></div>
         <button type="submit" class="btn btn-primary btn-full">Sign In</button>
-        <p class="form-hint">Demo: use any email &amp; password with 6+ chars</p>
+        <p class="form-hint">Demo: any email &amp; password with 6+ characters</p>
       </form>
 
       <!-- Sign Up -->
       <form class="tab-content" id="signupForm" data-tab="signup">
         <h2>Create Account</h2>
-        <p class="form-sub">Join ShopEase today</p>
+        <p class="form-sub">Join ShopEase and start saving</p>
         <div class="form-group">
           <label>Full Name</label>
           <input type="text" id="signupName" placeholder="John Doe" required />
         </div>
         <div class="form-group">
-          <label>Email</label>
+          <label>Email Address</label>
           <input type="email" id="signupEmail" placeholder="you@example.com" required />
         </div>
         <div class="form-group">
           <label>Password</label>
-          <input type="password" id="signupPassword" placeholder="Min 6 characters" required />
+          <input type="password" id="signupPassword" placeholder="Minimum 6 characters" required />
         </div>
         <div class="form-error" id="signupError"></div>
         <button type="submit" class="btn btn-primary btn-full">Create Account</button>
@@ -127,21 +278,24 @@
   <div class="drawer-overlay" id="cartOverlay"></div>
   <aside class="cart-drawer" id="cartDrawer">
     <div class="cart-header">
-      <h3>Your Cart</h3>
+      <h3>Your Cart <span class="cart-header-count" id="cartHeaderCount"></span></h3>
       <button class="modal-close" id="closeCart">&times;</button>
     </div>
     <div class="cart-items" id="cartItems">
       <div class="cart-empty" id="cartEmpty">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9m-9-4h4"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-9H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9m-9-4h4"/></svg>
         <p>Your cart is empty</p>
+        <small>Add some products to get started</small>
       </div>
     </div>
     <div class="cart-footer" id="cartFooter" style="display:none;">
-      <div class="cart-total">
-        <span>Total</span>
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
         <span id="cartTotal">$0.00</span>
       </div>
-      <button class="btn btn-primary btn-full" id="checkoutBtn">Proceed to Checkout</button>
+      <p class="cart-shipping-note">&#10003; Free shipping on this order</p>
+      <button class="btn btn-primary btn-full" id="checkoutBtn">Proceed to Checkout &rarr;</button>
+      <button class="btn btn-ghost btn-full btn-sm" onclick="document.getElementById('closeCart').click()">Continue Shopping</button>
     </div>
   </aside>
 
@@ -172,11 +326,11 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Email</label>
+            <label>Email Address</label>
             <input type="email" id="shippingEmail" placeholder="you@example.com" required />
           </div>
           <div class="form-group">
-            <label>Address</label>
+            <label>Street Address</label>
             <input type="text" id="address" placeholder="123 Main Street" required />
           </div>
           <div class="form-row">
@@ -199,7 +353,17 @@
               <option>Germany</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary btn-full">Continue to Payment</button>
+          <div class="shipping-options">
+            <label class="shipping-opt active-opt">
+              <input type="radio" name="shipping" value="free" checked />
+              <span>Standard (3-5 days) — <strong>Free</strong></span>
+            </label>
+            <label class="shipping-opt">
+              <input type="radio" name="shipping" value="express" />
+              <span>Express (1-2 days) — <strong>$9.99</strong></span>
+            </label>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Continue to Payment &rarr;</button>
         </form>
       </div>
 
@@ -207,6 +371,15 @@
       <div class="checkout-step" id="checkoutStep2">
         <h2>Payment Details</h2>
         <form id="paymentForm">
+          <div class="secure-badge">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            256-bit SSL Encrypted &amp; Secure
+          </div>
+          <div class="card-icons">
+            <span class="card-icon visa">VISA</span>
+            <span class="card-icon mc">MC</span>
+            <span class="card-icon amex">AMEX</span>
+          </div>
           <div class="form-group">
             <label>Cardholder Name</label>
             <input type="text" id="cardName" placeholder="John Doe" required />
@@ -222,18 +395,13 @@
             </div>
             <div class="form-group">
               <label>CVV</label>
-              <input type="text" id="cardCvv" placeholder="123" maxlength="4" required />
+              <input type="text" id="cardCvv" placeholder="•••" maxlength="4" required />
             </div>
-          </div>
-          <div class="card-icons">
-            <span class="card-icon visa">VISA</span>
-            <span class="card-icon mc">MC</span>
-            <span class="card-icon amex">AMEX</span>
           </div>
           <div class="form-error" id="paymentError"></div>
           <div class="btn-row">
-            <button type="button" class="btn btn-ghost" id="backToShipping">Back</button>
-            <button type="submit" class="btn btn-primary">Review Order</button>
+            <button type="button" class="btn btn-ghost" id="backToShipping">&larr; Back</button>
+            <button type="submit" class="btn btn-primary">Review Order &rarr;</button>
           </div>
         </form>
       </div>
@@ -247,18 +415,19 @@
             <p id="reviewAddress"></p>
           </div>
           <div>
-            <h4>Payment</h4>
+            <h4>Payment Method</h4>
             <p id="reviewCard"></p>
           </div>
         </div>
+        <h4 class="review-items-title">Order Items</h4>
         <div class="review-items" id="reviewItems"></div>
         <div class="cart-total review-total">
           <span>Order Total</span>
           <span id="reviewTotal"></span>
         </div>
         <div class="btn-row">
-          <button type="button" class="btn btn-ghost" id="backToPayment">Back</button>
-          <button type="button" class="btn btn-success" id="placeOrderBtn">Place Order</button>
+          <button type="button" class="btn btn-ghost" id="backToPayment">&larr; Back</button>
+          <button type="button" class="btn btn-success" id="placeOrderBtn">&#128274; Place Order</button>
         </div>
       </div>
     </div>
@@ -268,10 +437,10 @@
   <div class="modal-overlay" id="successModal">
     <div class="modal success-modal">
       <div class="success-icon">&#10003;</div>
-      <h2>Order Placed!</h2>
-      <p>Thank you for your purchase. You'll receive a confirmation email shortly.</p>
+      <h2>Order Confirmed!</h2>
+      <p>Thank you for shopping with ShopEase. A confirmation has been sent to your email.</p>
       <p class="order-id" id="orderId"></p>
-      <button class="btn btn-primary" id="closeSuccess">Continue Shopping</button>
+      <button class="btn btn-primary btn-full" id="closeSuccess">Continue Shopping</button>
     </div>
   </div>
 

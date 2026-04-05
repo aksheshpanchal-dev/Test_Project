@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopEase Admin — Order Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+  <!-- ===== LOGIN SCREEN ===== -->
+  <div id="loginScreen">
+    <div class="login-card">
+      <div class="login-logo">
+        <span>&#127807;</span>
+        <span>ShopEase</span>
+      </div>
+      <div class="login-badge">Admin Portal</div>
+      <h2>Sign In to Admin</h2>
+      <p class="login-sub">Manage orders, track deliveries, and more.</p>
+      <form id="loginForm">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="adminEmail" placeholder="admin@shopease.com" required />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="adminPassword" placeholder="••••••••" required />
+        </div>
+        <div class="form-error" id="loginError"></div>
+        <button type="submit" class="btn btn-primary btn-full">Sign In &rarr;</button>
+      </form>
+      <p class="login-hint">&#128274; Credentials: admin@shopease.com / admin123</p>
+      <a href="index.html" class="back-link">&larr; Back to Store</a>
+    </div>
+  </div>
+
+  <!-- ===== ADMIN SHELL ===== -->
+  <div id="adminShell" hidden>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span>&#127807;</span>
+        <span>ShopEase</span>
+        <span class="sidebar-badge">Admin</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-link active" data-view="dashboard">
+          <span class="nav-icon">&#128200;</span> Dashboard
+        </a>
+        <a href="#" class="nav-link" data-view="orders">
+          <span class="nav-icon">&#128230;</span> Orders
+        </a>
+        <a href="index.html" class="nav-link">
+          <span class="nav-icon">&#127807;</span> View Store
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user" id="sidebarUser"></div>
+        <button class="btn-logout" id="logoutBtn">
+          <span>&#128682;</span> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+
+      <!-- Dashboard View -->
+      <div id="viewDashboard" class="view">
+        <div class="page-header">
+          <div>
+            <p class="page-label">Overview</p>
+            <h1 class="page-title">Dashboard</h1>
+          </div>
+          <div class="page-date" id="pageDate"></div>
+        </div>
+        <div class="stats-grid" id="statsGrid">
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-blue">&#128230;</div>
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Total Orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-green">&#128176;</div>
+            <div class="stat-value" id="statRevenue">$0.00</div>
+            <div class="stat-label">Total Revenue</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-yellow">&#9201;</div>
+            <div class="stat-value" id="statPending">0</div>
+            <div class="stat-label">Pending Orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-green">&#10003;</div>
+            <div class="stat-value" id="statDelivered">0</div>
+            <div class="stat-label">Delivered</div>
+          </div>
+        </div>
+
+        <!-- Recent orders mini table -->
+        <div class="section-card">
+          <div class="section-card-header">
+            <h3>Recent Orders</h3>
+            <button class="btn btn-sm btn-outline-green" data-view="orders">View All &rarr;</button>
+          </div>
+          <div class="table-wrap">
+            <table id="recentTable">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Payment</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Orders View -->
+      <div id="viewOrders" class="view" hidden>
+        <div class="page-header">
+          <div>
+            <p class="page-label">Management</p>
+            <h1 class="page-title">Orders</h1>
+          </div>
+          <div class="search-bar">
+            <input type="text" id="orderSearch" placeholder="&#128269;  Search orders…" />
+          </div>
+        </div>
+
+        <div class="filter-tabs" id="filterTabs">
+          <button class="filter-tab active" data-status="All">All</button>
+          <button class="filter-tab" data-status="Pending">Pending</button>
+          <button class="filter-tab" data-status="Processing">Processing</button>
+          <button class="filter-tab" data-status="Shipped">Shipped</button>
+          <button class="filter-tab" data-status="Delivered">Delivered</button>
+          <button class="filter-tab" data-status="Cancelled">Cancelled</button>
+        </div>
+
+        <div class="table-wrap">
+          <table id="ordersTable">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Payment</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Update Status</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTableBody"></tbody>
+          </table>
+          <div class="table-empty" id="tableEmpty" style="display:none;">
+            <span>&#128230;</span>
+            <p>No orders found</p>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ===== ORDER DETAIL MODAL ===== -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <div class="modal-header">
+        <h3 id="modalOrderId">Order #SE-XXXXX</h3>
+        <span class="modal-status-badge" id="modalStatus"></span>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-section">
+          <h4>&#128230; Shipping Address</h4>
+          <p id="modalAddress"></p>
+        </div>
+        <div class="detail-section">
+          <h4>&#128179; Payment Method</h4>
+          <p id="modalPayment"></p>
+        </div>
+      </div>
+      <div class="detail-section">
+        <h4>&#128717; Order Items</h4>
+        <div class="modal-items" id="modalItems"></div>
+      </div>
+      <div class="modal-total">
+        <span>Order Total</span>
+        <span id="modalTotal"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>

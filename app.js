@@ -378,8 +378,35 @@ function buildReview() {
 
 // Place Order
 $('placeOrderBtn').addEventListener('click', () => {
-  closeCheckout();
   const orderId = 'SE-' + Math.random().toString(36).substring(2,8).toUpperCase();
+
+  // Persist order to localStorage for admin panel
+  const order = {
+    id: orderId,
+    customer: {
+      name: `${state.shipping.firstName} ${state.shipping.lastName}`,
+      email: state.shipping.email,
+    },
+    shipping: {
+      address: state.shipping.address,
+      city: state.shipping.city,
+      zip: state.shipping.zip,
+      country: state.shipping.country,
+    },
+    items: state.cart.map(i => ({ id: i.id, name: i.name, emoji: i.emoji, price: i.price, qty: i.qty })),
+    total: getCartTotal(),
+    paymentMethod: state.payment.method,
+    paymentDetail: state.payment.method === 'cod' ? 'Cash on Delivery' : `•••• ${state.payment.last4}`,
+    status: 'Pending',
+    date: new Date().toISOString().slice(0, 10),
+  };
+  try {
+    const existing = JSON.parse(localStorage.getItem('shopease_orders') || '[]');
+    existing.unshift(order);
+    localStorage.setItem('shopease_orders', JSON.stringify(existing));
+  } catch { /* storage unavailable */ }
+
+  closeCheckout();
   $('orderId').textContent = `Order #${orderId}`;
   $('successModal').classList.add('open');
   state.cart = [];

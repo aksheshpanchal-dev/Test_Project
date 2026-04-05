@@ -369,35 +369,74 @@
 
       <!-- Step 2: Payment -->
       <div class="checkout-step" id="checkoutStep2">
-        <h2>Payment Details</h2>
+        <h2>Payment Method</h2>
         <form id="paymentForm">
-          <div class="secure-badge">
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            256-bit SSL Encrypted &amp; Secure
+
+          <!-- Method selector -->
+          <div class="payment-methods">
+            <label class="payment-method active-method" id="methodCard">
+              <input type="radio" name="payMethod" value="card" checked />
+              <div class="method-icon">&#128179;</div>
+              <div class="method-info">
+                <strong>Credit / Debit Card</strong>
+                <span>Visa, Mastercard, Amex</span>
+              </div>
+              <div class="method-check">&#10003;</div>
+            </label>
+            <label class="payment-method" id="methodCod">
+              <input type="radio" name="payMethod" value="cod" />
+              <div class="method-icon">&#128181;</div>
+              <div class="method-info">
+                <strong>Cash on Delivery</strong>
+                <span>Pay when your order arrives</span>
+              </div>
+              <div class="method-check">&#10003;</div>
+            </label>
           </div>
-          <div class="card-icons">
-            <span class="card-icon visa">VISA</span>
-            <span class="card-icon mc">MC</span>
-            <span class="card-icon amex">AMEX</span>
-          </div>
-          <div class="form-group">
-            <label>Cardholder Name</label>
-            <input type="text" id="cardName" placeholder="John Doe" required />
-          </div>
-          <div class="form-group">
-            <label>Card Number</label>
-            <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" required />
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label>Expiry Date</label>
-              <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" required />
+
+          <!-- Card fields -->
+          <div id="cardFields">
+            <div class="secure-badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+              256-bit SSL Encrypted &amp; Secure
+            </div>
+            <div class="card-icons">
+              <span class="card-icon visa">VISA</span>
+              <span class="card-icon mc">MC</span>
+              <span class="card-icon amex">AMEX</span>
             </div>
             <div class="form-group">
-              <label>CVV</label>
-              <input type="text" id="cardCvv" placeholder="•••" maxlength="4" required />
+              <label>Cardholder Name</label>
+              <input type="text" id="cardName" placeholder="John Doe" />
+            </div>
+            <div class="form-group">
+              <label>Card Number</label>
+              <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Expiry Date</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY" maxlength="5" />
+              </div>
+              <div class="form-group">
+                <label>CVV</label>
+                <input type="text" id="cardCvv" placeholder="•••" maxlength="4" />
+              </div>
             </div>
           </div>
+
+          <!-- COD info panel -->
+          <div id="codInfo" class="cod-info" style="display:none;">
+            <div class="cod-icon">&#128181;</div>
+            <h4>Cash on Delivery</h4>
+            <p>Pay in cash when your order is delivered to your door. No card details required.</p>
+            <ul class="cod-notes">
+              <li>&#10003; Available for all delivery areas</li>
+              <li>&#10003; Please keep exact change ready</li>
+              <li>&#10003; Order confirmation sent via email</li>
+            </ul>
+          </div>
+
           <div class="form-error" id="paymentError"></div>
           <div class="btn-row">
             <button type="button" class="btn btn-ghost" id="backToShipping">&larr; Back</button>

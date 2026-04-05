@@ -970,6 +970,90 @@ body {
 .checkout-step.active { display: block; }
 .checkout-step h2 { font-size: 1.45rem; font-weight: 800; margin-bottom: 22px; letter-spacing: -0.4px; }
 
+/* Payment method selector */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+.payment-method {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .2s;
+}
+.payment-method input[type="radio"] { display: none; }
+.payment-method:hover { border-color: var(--primary-light); background: var(--primary-xlight); }
+.payment-method.active-method {
+  border-color: var(--primary);
+  background: var(--primary-xlight);
+}
+.method-icon { font-size: 1.6rem; flex-shrink: 0; }
+.method-info { flex: 1; }
+.method-info strong { display: block; font-size: 0.92rem; font-weight: 700; color: var(--text); }
+.method-info span { font-size: 0.8rem; color: var(--text-muted); }
+.method-check {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: transparent;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.payment-method.active-method .method-check {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* COD info panel */
+.cod-info {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background: var(--primary-xlight);
+  border: 1.5px dashed var(--primary-light);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  margin-bottom: 16px;
+  gap: 10px;
+}
+.cod-icon { font-size: 2.8rem; }
+.cod-info h4 { font-size: 1.05rem; font-weight: 800; color: var(--text); }
+.cod-info p { font-size: 0.875rem; color: var(--text-muted); max-width: 320px; line-height: 1.5; }
+.cod-notes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  width: 100%;
+  max-width: 300px;
+}
+.cod-notes li { font-size: 0.84rem; color: var(--primary-dark); font-weight: 600; }
+
+/* COD review badge */
+.review-cod-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--primary-xlight);
+  border: 1px solid var(--primary-light);
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+
 /* Card icons */
 .card-icons { display: flex; gap: 8px; margin: 0 0 18px; }
 .card-icon {

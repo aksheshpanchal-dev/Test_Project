@@ -319,20 +319,39 @@ $('cardExpiry').addEventListener('input', e => {
   e.target.value = v;
 });
 
+// Payment method toggle
+document.querySelectorAll('input[name="payMethod"]').forEach(radio => {
+  radio.addEventListener('change', () => {
+    const isCod = radio.value === 'cod';
+    $('cardFields').style.display = isCod ? 'none' : 'block';
+    $('codInfo').style.display = isCod ? 'flex' : 'none';
+    $('methodCard').classList.toggle('active-method', !isCod);
+    $('methodCod').classList.toggle('active-method', isCod);
+    $('paymentError').textContent = '';
+  });
+});
+
 // Step 2: Payment
 $('paymentForm').addEventListener('submit', e => {
   e.preventDefault();
-  const num = $('cardNumber').value.replace(/\s/g, '');
-  if (num.length < 15) {
-    $('paymentError').textContent = 'Please enter a valid card number.';
-    return;
-  }
+  const isCod = document.querySelector('input[name="payMethod"]:checked').value === 'cod';
   $('paymentError').textContent = '';
-  state.payment = {
-    name: $('cardName').value,
-    last4: num.slice(-4),
-    expiry: $('cardExpiry').value,
-  };
+
+  if (isCod) {
+    state.payment = { method: 'cod' };
+  } else {
+    const num = $('cardNumber').value.replace(/\s/g, '');
+    if (num.length < 15) {
+      $('paymentError').textContent = 'Please enter a valid card number.';
+      return;
+    }
+    state.payment = {
+      method: 'card',
+      name: $('cardName').value,
+      last4: num.slice(-4),
+      expiry: $('cardExpiry').value,
+    };
+  }
   buildReview();
   goToStep(3);
 });
@@ -343,7 +362,9 @@ $('backToPayment').addEventListener('click', () => goToStep(2));
 function buildReview() {
   const s = state.shipping;
   $('reviewAddress').textContent = `${s.firstName} ${s.lastName}, ${s.address}, ${s.city} ${s.zip}, ${s.country}`;
-  $('reviewCard').textContent = `•••• •••• •••• ${state.payment.last4} (${state.payment.expiry})`;
+  $('reviewCard').innerHTML = state.payment.method === 'cod'
+    ? `<span class="review-cod-badge">&#128181; Cash on Delivery</span>`
+    : `•••• •••• •••• ${state.payment.last4} (${state.payment.expiry})`;
 
   $('reviewItems').innerHTML = state.cart.map(item => `
     <div class="review-item">
